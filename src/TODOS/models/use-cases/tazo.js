@@ -12,7 +12,7 @@ export const set_Tazo_title = () => {
 
         switch (keyTazo) {
             case 0:
-                h1.textContent = 'Tareas:'
+                h1.textContent = 'Tareas:';
                 break;
             case 1:
                 h1.textContent = 'Hey Tazo! Everything aight?';

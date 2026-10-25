@@ -1,4 +1,4 @@
-export let keyTazo = Math.floor(Math.random() * 8) + 1;
+export let keyTazo = Math.floor(Math.random() * 9) + 1;
 
 export const set_Tazo_title = () => {
         const h1 = document.querySelector('h1');

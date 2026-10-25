@@ -7,7 +7,7 @@ export const set_Tazo_title = () => {
         if (!h1) throw new Error('Title element not found');
 
         while (keyTazo === lastKeyTazo) {
-                keyTazo = Math.floor(Math.random() * 8) + 1;
+                keyTazo = Math.floor(Math.random() * 9) + 1;
         }
 
         switch (keyTazo) {

@@ -69,12 +69,18 @@ body {
 
 .todoapp h1 {
 	position: absolute;
-	top: -140px;
+	top: -100px;
+	left: 0;
 	width: 100%;
-	font-size: 80px;
+	margin: 0;
+	padding: 0 8px;
+	box-sizing: border-box;
+	font-size: clamp(2rem, 8vw, 2.75rem);
 	font-weight: 200;
+	line-height: 1.0;
 	text-align: center;
 	color: #b83f45;
+	overflow-wrap: anywhere;
 	-webkit-text-rendering: optimizeLegibility;
 	-moz-text-rendering: optimizeLegibility;
 	text-rendering: optimizeLegibility;

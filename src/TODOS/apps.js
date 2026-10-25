@@ -1,6 +1,6 @@
 import html from './apps.html?raw';
 import todo_store, { filters } from '../store/TODO.store.js';
-import { render_TODO, render_Pending } from './models/use-cases/barril.js';
+import { render_TODO, render_Pending, set_Tazo_title } from './models/use-cases/barril.js';
 
 const elementIDs = {
         clear_completed: '.clear-completed',
@@ -32,6 +32,7 @@ export const Apps = ( elementId ) => {
             const apps = document.createElement('div');
                   apps.innerHTML = html;  
                   document.querySelector(elementId).append(apps);
+                  set_Tazo_title();
                   display_TODO();
         })();
 
@@ -52,23 +53,27 @@ export const Apps = ( elementId ) => {
         };
 
         filters_UL.forEach( element => {
-                element.addEventListener('click', ( element ) => {
+                element.addEventListener('click', ( event ) => {
+                        event.preventDefault();
                         filters_UL.forEach( el => el.classList.remove('selected') );
-                        element.target.classList.add('selected');
+                        element.classList.add('selected');
 
-                                switch ( element.target.selectorText ) {
-                                        case 'Todos':
-                                                todo_store.set_filter( todo_store.filters.All );
-                                        case 'Pendientes':
-                                                todo_store.set_filter( todo_store.filters.pending );
-                                        case 'Completados':
-                                                todo_store.set_filter( todo_store.filters.completed );
-                                        Return;
-                                        
+                        switch ( element.getAttribute('href') ) {
+                                case '#/':
+                                        todo_store.set_filter( filters.All );
+                                        break;
+                                case '#/active':
+                                        todo_store.set_filter( filters.pending );
+                                        break;
+                                case '#/completed':
+                                        todo_store.set_filter( filters.completed );
+                                        break;
+                                default:
+                                        return;
+                        }
 
-                        console.log('Establecido a:', element.target.textContent);
                         display_TODO();
-        }});
+                });
         });
 
         new_todo_input.addEventListener('keyup', ( event ) => {
@@ -92,14 +97,20 @@ export const Apps = ( elementId ) => {
         });
 
         todo_list_UL.addEventListener('click', ( event ) => {
-                
                 const element = event.target.closest('[data-id]');
-                todo_store.toggle_TODO( element.getAttribute('data-id') );
-                console.log( event.target );
+                if ( !element ) return;
+
+                if ( event.target.closest('.destroy') ) {
+                        todo_store.clear_TODO( element.getAttribute('data-id') );
+                } else if ( event.target.closest('.toggle') ) {
+                        todo_store.toggle_TODO( element.getAttribute('data-id') );
+                } else {
+                        return;
+                }
+
                 display_TODO();
         });
-
-        todo_list_UL.addEventListener('click', ( event ) => {
+ todo_list_UL.addEventListener('click', ( event ) => {
                 const element = event.target.closest('[data-id]');
                 const destroy_X = event.target.classList.contains('destroy');
 

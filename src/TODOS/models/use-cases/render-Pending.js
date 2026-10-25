@@ -17,5 +17,5 @@ export const render_Pending = ( elementId ) => {
     if (!element) 
         throw new Error(`Element not found: ${elementId}`);
     
-    element.innerHTML = todo_store.get_TODO( todo_store.get_current_filter() || filters.pending ).length;
+    element.innerHTML = todo_store.get_TODO( filters.pending ).length;
 };
